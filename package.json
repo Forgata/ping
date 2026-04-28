@@ -20,10 +20,10 @@
   "license": "MIT",
   "author": "Forgata",
   "type": "module",
-  "main": "main.ts",
+  "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:test": "tsx watch src/main.ts",
+    "dev:test": "tsx watch src/server.ts",
     "build": "tsc -b",
     "dev:watch": "npm run build && nodemon"
   },
@@ -33,5 +33,11 @@
     "nodemon": "^3.1.14",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.5.0",
+    "zod": "^4.3.6"
   }
 }
