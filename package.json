@@ -1,0 +1,37 @@
+{
+  "name": "ping",
+  "version": "1.0.0",
+  "description": "an observability dashboard that measures API responsiveness over time, tracks endpoints and analyses trends",
+  "keywords": [
+    "api",
+    "tracker",
+    "analytics",
+    "dashboard",
+    "cli"
+  ],
+  "homepage": "https://github.com/Forgata/ping#readme",
+  "bugs": {
+    "url": "https://github.com/Forgata/ping/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Forgata/ping.git"
+  },
+  "license": "MIT",
+  "author": "Forgata",
+  "type": "module",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:test": "tsx watch src/main.ts",
+    "build": "tsc -b",
+    "dev:watch": "npm run build && nodemon"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "nodemon": "^3.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}
