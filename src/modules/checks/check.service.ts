@@ -41,6 +41,7 @@ export const runHealthCheck = async (id: string) => {
     }
 
     await Check.create(result);
+    await Target.findByIdAndUpdate(_id, { lastCheckedAt: result.checkedAt });
     return result;
   } catch (err) {
     console.error(err);
