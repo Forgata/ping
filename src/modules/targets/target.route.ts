@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from "express";
 import { create, getTargetController, remove } from "./target.controller.js";
-import { validate } from "./target.middleware.js";
+import { validate } from "../../global/global.middleware.js";
 import { createTargetSchema, deleteTargetSchema } from "./target.schema.js";
 
 const targetRouter = Router();
