@@ -18,7 +18,7 @@ const checkSchema = new Schema<ICheck>({
   latencyMs: { type: Number, required: true },
   success: { type: Boolean },
   errorMsg: { type: String },
-  checkedAt: { type: Date, required: true },
+  checkedAt: { type: Date, required: true, expires: "10m" },
 });
 
 const Check = model<ICheck>("Check", checkSchema);
