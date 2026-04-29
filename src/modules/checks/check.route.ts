@@ -1,5 +1,9 @@
 import { Router } from "express";
 
-const router = Router();
+const checkRouter = Router();
 
-export default router;
+checkRouter.post("/targets/:id/run");
+checkRouter.get("/targets/:id/checks");
+checkRouter.get("/targets/:id/summary");
+
+export default checkRouter;
