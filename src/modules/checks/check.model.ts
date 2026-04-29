@@ -12,12 +12,12 @@ export interface ICheck extends Document {
 }
 
 const checkSchema = new Schema<ICheck>({
-  targetId: { type: Schema.Types.ObjectId, required: true },
+  targetId: { type: Schema.Types.ObjectId, required: true, index: true },
   url: { type: String, required: true },
   statusCode: { type: Number, required: true },
-  latencyMs: { type: Number },
+  latencyMs: { type: Number, required: true },
   success: { type: Boolean },
-  errorMsg: { type: String, required: true },
+  errorMsg: { type: String },
   checkedAt: { type: Date, required: true },
 });
 
