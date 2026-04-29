@@ -1,9 +1,12 @@
 import { type NextFunction, type Request, type Response } from "express";
 import { createTarget, removeTarget, getTargets } from "./target.service.js";
-import type { CreateTargetInput, DeleteTargetParams } from "./target.schema.js";
+import type {
+  CreateTargetInputBody,
+  DeleteTargetParams,
+} from "./target.schema.js";
 
 export const create = async (
-  req: Request<{}, {}, CreateTargetInput>,
+  req: Request<{}, {}, CreateTargetInputBody>,
   res: Response,
   next: NextFunction,
 ) => {
