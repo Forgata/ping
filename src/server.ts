@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import targetRouter from "./modules/targets/target.route.js";
 import { connectDB } from "./db/connectDB.js";
+import checkRouter from "./modules/checks/check.route.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -16,4 +17,5 @@ app.listen(PORT, async () => {
 
 app.use(express.json());
 app.use("/api", targetRouter);
+app.use("/api", checkRouter);
 //
