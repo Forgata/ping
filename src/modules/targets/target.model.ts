@@ -6,6 +6,7 @@ export interface ITarget extends Document {
   url: string;
   intervalSeconds: number;
   active: boolean;
+  lastCheckedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,6 +17,7 @@ const TargetModel = new Schema<ITarget>(
     url: { type: String, required: true },
     intervalSeconds: { type: Number, required: true },
     active: { type: Boolean, default: true },
+    lastCheckedAt: { type: Date },
   },
   { timestamps: true },
 );
