@@ -3,6 +3,7 @@ import express from "express";
 import targetRouter from "./modules/targets/target.route.js";
 import { connectDB } from "./db/connectDB.js";
 import checkRouter from "./modules/checks/check.route.js";
+import { startScheduler } from "./modules/scheduler/scheduler.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -13,6 +14,7 @@ if (!URI) throw new Error("MONGODB_URI required");
 app.listen(PORT, async () => {
   await connectDB(URI);
   console.log(`Server is running on port ${PORT}`);
+  startScheduler();
 });
 
 app.use(express.json());
