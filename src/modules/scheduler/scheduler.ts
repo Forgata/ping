@@ -28,6 +28,6 @@ export async function startScheduler() {
   } catch (err) {
     throw new Error("Failed to get targets", { cause: err });
   } finally {
-    setTimeout(startScheduler, 1000);
+    setTimeout(startScheduler, 5000);
   }
 }
