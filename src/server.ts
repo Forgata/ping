@@ -4,6 +4,7 @@ import targetRouter from "./modules/targets/target.route.js";
 import { connectDB } from "./db/connectDB.js";
 import checkRouter from "./modules/checks/check.route.js";
 import { startScheduler } from "./modules/scheduler/scheduler.js";
+import summaryRouter from "./modules/summary/summary.route.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -20,4 +21,6 @@ app.listen(PORT, async () => {
 app.use(express.json());
 app.use("/api", targetRouter);
 app.use("/api", checkRouter);
+app.use("/api", summaryRouter);
+
 //
