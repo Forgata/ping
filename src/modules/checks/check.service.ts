@@ -1,7 +1,6 @@
 import { Types } from "mongoose";
 import Target from "../targets/target.model.js";
 import Check from "./check.model.js";
-import { avgLatency, getUptime } from "./utils/checks.utils.js";
 
 export const runHealthCheck = async (id: string) => {
   try {
@@ -66,24 +65,6 @@ export const getChecks = async (id: string) => {
 
     if (!checks.length) console.warn("Target not found");
     return checks;
-  } catch (err) {
-    console.error(err);
-    throw new Error("Failed to get checked targets");
-  }
-};
-
-export const getSummary = async (id: string) => {
-  try {
-    const checks = await Check.find({ targetId: new Types.ObjectId(id) })
-      .sort({ checkedAt: -1 })
-      .lean();
-
-    if (!checks) console.warn("Target not found");
-    const { totalCount, uptime } = getUptime(checks);
-    const latencyAvg = avgLatency(checks);
-    const latest = checks[0]?.checkedAt;
-
-    return { totalCount, uptime, latencyAvg, latest };
   } catch (err) {
     console.error(err);
     throw new Error("Failed to get checked targets");

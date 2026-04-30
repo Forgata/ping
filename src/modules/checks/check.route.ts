@@ -1,7 +1,7 @@
 import { validate } from "../../global/global.middleware.js";
 import { Router } from "express";
 import { checkTargetSchema } from "./check.schema.js";
-import { runCheck, summary, TargetChecks } from "./check.controller.js";
+import { runCheck, TargetChecks } from "./check.controller.js";
 
 const checkRouter = Router();
 
@@ -11,6 +11,5 @@ checkRouter.get(
   validate(checkTargetSchema),
   TargetChecks,
 );
-checkRouter.get("/targets/:id/summary", validate(checkTargetSchema), summary);
 
 export default checkRouter;
