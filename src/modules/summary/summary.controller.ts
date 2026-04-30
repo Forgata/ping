@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import type { SummaryParams } from "./summary.schema.js";
-import { getSummary } from "./summary.service.js";
+import { createSummary, getSummary } from "./summary.service.js";
 
 export const summaryPost = async (
   req: Request<SummaryParams, {}, {}>,
@@ -9,7 +9,7 @@ export const summaryPost = async (
 ) => {
   try {
     const { id } = req.params;
-    const result = await getSummary(id);
+    const result = await createSummary(id);
 
     res.status(200).json({
       success: true,

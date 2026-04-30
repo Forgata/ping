@@ -1,10 +1,10 @@
 import { Types } from "mongoose";
 import Check from "../checks/check.model.js";
 import { getUptime, getLatency } from "../checks/utils/checks.utils.js";
-import { Summary, type ISummary } from "./summary.model.js";
+import { Summary } from "./summary.model.js";
 
 export const createSummary = async (id: string) => {
-  let summary: Partial<ISummary>;
+  let summary;
   try {
     const checks = await Check.find({ targetId: new Types.ObjectId(id) })
       .sort({ checkedAt: -1 })
@@ -13,13 +13,18 @@ export const createSummary = async (id: string) => {
     if (!checks) console.warn("Target not found");
 
     const { totalCheckCount, uptime } = getUptime(checks);
+
     const avgLatency = getLatency(checks);
+
     const lastCheckedAt = checks[0]?.checkedAt!;
-    const consecutiveFailureCount = checks.filter(
-      (check) => !check.success,
-    ).length;
+
+    let consecutiveFailureCount = 0;
+    for (const check of checks) {
+      if (!check.success) consecutiveFailureCount++;
+      else break;
+    }
+
     const successCount = checks.filter((check) => check.success).length;
-    const failureCount = checks.filter((check) => !check.success).length;
 
     summary = {
       totalCheckCount,
@@ -28,12 +33,11 @@ export const createSummary = async (id: string) => {
       lastCheckedAt,
       consecutiveFailureCount,
       successCount,
-      failureCount,
+      failureCount: totalCheckCount - successCount,
       lastStatus: checks[0]?.success ? "HEALTHY" : "DOWN",
     };
 
     await Summary.create(summary);
-    return summary;
   } catch (err) {
     console.error(err);
     throw new Error("Failed to get checked targets");
