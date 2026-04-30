@@ -5,6 +5,7 @@ import { connectDB } from "./db/connectDB.js";
 import checkRouter from "./modules/checks/check.route.js";
 import { checkScheduler } from "./modules/scheduler/check.scheduler.js";
 import summaryRouter from "./modules/summary/summary.route.js";
+import { summaryScheduler } from "./modules/scheduler/summary.scheduler.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -16,6 +17,7 @@ app.listen(PORT, async () => {
   await connectDB(URI);
   console.log(`Server is running on port ${PORT}`);
   checkScheduler();
+  summaryScheduler();
 });
 
 app.use(express.json());
