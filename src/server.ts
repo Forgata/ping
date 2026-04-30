@@ -6,6 +6,7 @@ import checkRouter from "./modules/checks/check.route.js";
 import { checkScheduler } from "./modules/scheduler/check.scheduler.js";
 import summaryRouter from "./modules/summary/summary.route.js";
 import { summaryScheduler } from "./modules/scheduler/summary.scheduler.js";
+import alertRouter from "./modules/alerts/alert.route.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -24,5 +25,6 @@ app.use(express.json());
 app.use("/api", targetRouter);
 app.use("/api", checkRouter);
 app.use("/api", summaryRouter);
+app.use("/api", alertRouter);
 
 //
