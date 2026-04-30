@@ -27,6 +27,7 @@ export const createSummary = async (id: string) => {
     const successCount = checks.filter((check) => check.success).length;
 
     summary = {
+      targetId: new Types.ObjectId(id),
       totalCheckCount,
       uptime,
       avgLatency,
@@ -46,8 +47,10 @@ export const createSummary = async (id: string) => {
 
 export const getSummary = async (id: string) => {
   try {
-    const summary = await Summary.find({ targetId: new Types.ObjectId(id) });
-    if (!summary) throw new Error("Summary not found");
+    const summary = await Summary.findOne({ targetId: new Types.ObjectId(id) });
+
+    if (!summary) console.warn("Summary not found");
+
     return summary;
   } catch (error) {
     console.error(error);
