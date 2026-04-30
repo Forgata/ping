@@ -1,6 +1,7 @@
-import { model, Schema, type Document } from "mongoose";
+import { model, Schema, Types, type Document } from "mongoose";
 
 export interface ISummary extends Document {
+  targetId: Types.ObjectId;
   totalCheckCount: number;
   successCount: number;
   failureCount: number;
@@ -12,6 +13,7 @@ export interface ISummary extends Document {
 }
 
 const summarySchema = new Schema<ISummary>({
+  targetId: { type: Schema.Types.ObjectId, required: true, index: true },
   totalCheckCount: { type: Number, required: true },
   successCount: { type: Number, required: true },
   failureCount: { type: Number, required: true },
