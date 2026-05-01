@@ -42,13 +42,10 @@ export const runHealthCheck = async (id: string) => {
       if (i < maxRetries) await new Promise((res) => setTimeout(res, 1000));
     }
 
-    // 1. Save the check result
     await Check.create(result!);
 
-    // 2. Update Target timestamp
     await Target.findByIdAndUpdate(_id, { lastCheckedAt: result!.checkedAt });
 
-    // 3. Update Summary (The critical bridge)
     await Summary.findOneAndUpdate(
       { targetId: _id },
       {
