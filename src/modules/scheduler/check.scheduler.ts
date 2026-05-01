@@ -49,7 +49,7 @@ export class Scheduler {
 
       if (dueTargets.length > 0) {
         this.checksInProgress = dueTargets.length;
-        console.log(`Processing ${dueTargets.length} targets...`);
+        console.log(`Processing ${dueTargets.length} target(s)...`);
 
         await Promise.all(
           dueTargets.map(async (target) => {
@@ -75,7 +75,7 @@ export class Scheduler {
     return {
       isRunning: this.isRunning,
       lastCycleAt: this.lastCycleAt,
-      activeTargets: activeTargets,
+      activeTargets: activeTargets.length,
       checksInProgress: this.checksInProgress,
     };
   }
