@@ -14,6 +14,7 @@ The application is structured into domain-specific modules, each handling a dist
 - **System**: Diagnostic endpoint for monitoring the health of the engine itself.
 
 Each module has its own set of routes and service functions, ensuring a clear separation of concerns.
+**Detailed Blueprint**: For a deep dive into data flow, component relationships, and indexing strategies, see [`architecture.md`](docs/architecture.md).
 
 ## Getting Started
 
