@@ -2,8 +2,6 @@
 
 A lightweight, automated service health monitoring system built with Node.js, Express, and MongoDB.
 
----
-
 ## System Architecture
 
 The application is structured into domain-specific modules, each handling a distinct part of the monitoring lifecycle:
@@ -15,11 +13,11 @@ The application is structured into domain-specific modules, each handling a dist
 - **Alert**: State machine that manages incident creation and resolution.
 - **System**: Diagnostic endpoint for monitoring the health of the engine itself.
 
----
+Each module has its own set of routes and service functions, ensuring a clear separation of concerns.
 
 ## Getting Started
 
-### Prerequisites
+### What You Need
 
 - **Node.js** (v18+ recommended)
 - **MongoDB** (Local or Atlas instance)
@@ -27,21 +25,22 @@ The application is structured into domain-specific modules, each handling a dist
 ### Installation
 
 1. Clone the repository.
+
 2. Install dependencies:
+
    ```bash
    npm install
    ```
+
 3. Configure your environment variables in a `.env` file (e.g., `MONGO_URI`, `PORT`).
 
-### Running the Application
+### Running
 
 To start the API and initialize the background scheduler:
 
 ```bash
 npm run dev
 ```
-
----
 
 ## Data Flow
 
@@ -64,15 +63,13 @@ Detailed technical documentation for each module can be found in the `docs/modul
 - [`alert.md`](docs/modules/alert.md) - Incident lifecycle management.
 - [`system.md`](docs/modules/system.md) - Operational status API.
 
----
-
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Runtime**: Node.js with TypeScript
 - **Framework**: Express
 - **Database**: MongoDB via Mongoose
 - **Validation**: Zod
-- **Utilities**: Native Fetch API, Performance Web AP
+- **Utilities**: Native Fetch API, Performance Web API
 
 ## License
 
