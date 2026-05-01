@@ -16,7 +16,6 @@ if (!URI) throw new Error("MONGODB_URI required");
 app.listen(PORT, async () => {
   await connectDB(URI);
   console.log(`Server is running on port ${PORT}`);
-  // checkScheduler();
   scheduler.start();
 });
 
