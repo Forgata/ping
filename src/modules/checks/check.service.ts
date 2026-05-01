@@ -3,6 +3,7 @@ import Target from "../targets/target.model.js";
 import Check from "./check.model.js";
 import Summary from "../summary/summary.model.js";
 import { createAlert } from "../alerts/alert.service.js";
+
 export const runHealthCheck = async (id: string) => {
   try {
     const target = await Target.findById(id);
