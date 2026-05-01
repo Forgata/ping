@@ -45,6 +45,16 @@ export const getTargets = async () => {
   return targets;
 };
 
+export const getActiveTargets = async () => {
+  try {
+    const activeTargets = await Target.find({ active: true }).lean();
+    return activeTargets;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Failed to get active targets");
+  }
+};
+
 export const removeTarget = async (id: string) => {
   try {
     const removedTarget = await Target.findByIdAndDelete(id);
