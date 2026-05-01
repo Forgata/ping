@@ -14,7 +14,7 @@ export interface ITarget extends Document {
 const TargetModel = new Schema<ITarget>(
   {
     name: { type: String, required: true },
-    url: { type: String, required: true },
+    url: { type: String, required: true, unique: true },
     intervalSeconds: { type: Number, required: true },
     active: { type: Boolean, default: true },
     lastCheckedAt: { type: Date },
