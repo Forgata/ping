@@ -22,16 +22,17 @@
   "type": "module",
   "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:test": "tsx watch src/server.ts",
     "build": "tsc -b",
-    "dev:watch": "npm run build && nodemon"
+    "start": "npm run build && node dist/server.js",
+    "build:watch": "tsc -b --watch",
+    "start:dev": "nodemon dist/server.js",
+    "dev": "concurrently \"npm run build:watch\" \"npm run start:dev\""
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
+    "concurrently": "^9.2.1",
     "nodemon": "^3.1.14",
-    "tsx": "^4.21.0",
     "typescript": "^6.0.3"
   },
   "dependencies": {
