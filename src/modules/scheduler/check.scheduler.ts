@@ -1,10 +1,12 @@
 import type { ITarget } from "../targets/target.model.js";
-import { getTargets } from "../targets/target.service.js";
+import { getActiveTargets, getTargets } from "../targets/target.service.js";
 import { runHealthCheck } from "../checks/check.service.js";
 
 export class Scheduler {
   private isRunning: boolean = false;
   private timer: NodeJS.Timeout | null = null;
+  private lastCycleAt: Date | null = null;
+  private checksInProgress: number = 0;
 
   async start() {
     if (this.isRunning) return;
@@ -28,6 +30,7 @@ export class Scheduler {
     } catch (err) {
       console.error(err);
     } finally {
+      this.lastCycleAt = new Date();
       this.timer = setTimeout(() => this.runScheduler(), 5000);
     }
   }
@@ -45,19 +48,36 @@ export class Scheduler {
       });
 
       if (dueTargets.length > 0) {
+        this.checksInProgress = dueTargets.length;
         console.log(`Processing ${dueTargets.length} targets...`);
 
         await Promise.all(
           dueTargets.map(async (target) => {
-            await runHealthCheck(target._id.toString());
+            try {
+              await runHealthCheck(target._id.toString());
+            } finally {
+              this.checksInProgress--;
+            }
           }),
         );
       } else {
         console.log("Nothing to run");
       }
     } catch (err) {
+      this.checksInProgress = 0;
       throw new Error("Failed to get targets", { cause: err });
     }
+  }
+
+  async getStatus() {
+    const activeTargets = await getActiveTargets();
+
+    return {
+      isRunning: this.isRunning,
+      lastCycleAt: this.lastCycleAt,
+      activeTargets: activeTargets,
+      checksInProgress: this.checksInProgress,
+    };
   }
 }
 
