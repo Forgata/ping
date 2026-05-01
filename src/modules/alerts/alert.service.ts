@@ -37,13 +37,15 @@ export const createAlert = async (id: string) => {
     }
 
     if (summary.consecutiveFailureCount > 3 && summary.lastStatus === "DOWN") {
-      await Alert.create({
-        targetId: new Types.ObjectId(id),
-        status: "active",
-        message: "Service is down",
-        startedAt: new Date(),
-        failureCount: currentFailures,
-      });
+      if (!activeAlert) {
+        await Alert.create({
+          targetId: new Types.ObjectId(id),
+          status: "active",
+          message: "Service is down",
+          startedAt: new Date(),
+          failureCount: currentFailures,
+        });
+      }
     }
   } catch (error) {
     console.error(error);
