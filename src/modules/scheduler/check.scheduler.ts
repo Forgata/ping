@@ -51,7 +51,7 @@ export class Scheduler {
         this.checksInProgress = dueTargets.length;
         console.log(`Processing ${dueTargets.length} target(s)...`);
 
-        await Promise.all(
+        await Promise.allSettled(
           dueTargets.map(async (target) => {
             try {
               await runHealthCheck(target._id.toString());
