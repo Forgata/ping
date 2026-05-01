@@ -1,13 +1,28 @@
 {
   "name": "ping",
   "version": "1.0.0",
-  "description": "an observability dashboard that measures API responsiveness over time, tracks endpoints and analyses trends",
+  "description": "A high-performance monitoring engine that orchestrates parallel network probes, manages service health summaries via atomic MongoDB updates, and implements a state-driven incident alerting system",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "keywords": [
     "api",
     "tracker",
     "analytics",
     "dashboard",
-    "cli"
+    "cli",
+    "uptime-monitor",
+    "health-check",
+    "scheduler",
+    "monitoring-service",
+    "incident-alerting",
+    "mongodb",
+    "typescript",
+    "express-api",
+    "latency-tracking",
+    "service-reliability",
+    "real-time-monitoring"
   ],
   "homepage": "https://github.com/Forgata/ping#readme",
   "bugs": {
@@ -20,7 +35,7 @@
   "license": "MIT",
   "author": "Forgata",
   "type": "module",
-  "main": "server.ts",
+  "main": "./dist/server.js",
   "scripts": {
     "build": "tsc -b",
     "start": "npm run build && node dist/server.js",
