@@ -73,3 +73,7 @@ Detailed technical documentation for each module can be found in the `docs/modul
 - **Database**: MongoDB via Mongoose
 - **Validation**: Zod
 - **Utilities**: Native Fetch API, Performance Web AP
+
+## License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
