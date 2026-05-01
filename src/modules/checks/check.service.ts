@@ -1,19 +1,19 @@
 import { Types } from "mongoose";
 import Target from "../targets/target.model.js";
 import Check from "./check.model.js";
-
+import Summary from "../summary/summary.model.js";
+import { createAlert } from "../alerts/alert.service.js";
 export const runHealthCheck = async (id: string) => {
   try {
     const target = await Target.findById(id);
     if (!target) throw new Error("Target not found");
 
     const { _id, url } = target;
-    const startTime = performance.now();
     const maxRetries = 2;
     let result;
 
-    // Retry Loop: Initial attempt + up to 2 retries
     for (let i = 0; i <= maxRetries; i++) {
+      const startTime = performance.now();
       try {
         const response = await fetch(url);
         const endTime = performance.now();
@@ -27,27 +27,44 @@ export const runHealthCheck = async (id: string) => {
           errorMsg: response.ok ? "" : `Status: ${response.statusText}`,
           checkedAt: new Date(),
         };
-
         if (response.ok) break;
       } catch (err: any) {
-        const endTime = performance.now();
         result = {
           targetId: _id,
           url,
           statusCode: 0,
-          latencyMs: endTime - startTime,
+          latencyMs: performance.now() - startTime,
           success: false,
           errorMsg: err.message,
           checkedAt: new Date(),
         };
       }
-      if (i < maxRetries) {
-        await new Promise((res) => setTimeout(res, 1000));
-      }
+      if (i < maxRetries) await new Promise((res) => setTimeout(res, 1000));
     }
 
+    // 1. Save the check result
     await Check.create(result!);
+
+    // 2. Update Target timestamp
     await Target.findByIdAndUpdate(_id, { lastCheckedAt: result!.checkedAt });
+
+    // 3. Update Summary (The critical bridge)
+    await Summary.findOneAndUpdate(
+      { targetId: _id },
+      {
+        $set: { lastStatus: result!.success ? "HEALTHY" : "DOWN" },
+        $inc: { consecutiveFailureCount: result!.success ? -999 : 1 }, // Logic below
+      },
+      { upsert: true },
+    );
+
+    await Summary.updateOne(
+      { targetId: _id, consecutiveFailureCount: { $lt: 0 } },
+      { $set: { consecutiveFailureCount: 0 } },
+    );
+
+    await createAlert(_id.toString());
+
     return result;
   } catch (err) {
     console.error(err);
@@ -64,6 +81,7 @@ export const getChecks = async (id: string) => {
       .lean();
 
     if (!checks.length) console.warn("Target not found");
+
     return checks;
   } catch (err) {
     console.error(err);
