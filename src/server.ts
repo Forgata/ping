@@ -25,4 +25,7 @@ app.use("/api", checkRouter);
 app.use("/api", summaryRouter);
 app.use("/api", alertRouter);
 
-//
+process.on("SIGINT", () => {
+  scheduler.stop();
+  process.exit(0);
+});
