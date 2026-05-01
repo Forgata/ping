@@ -6,6 +6,7 @@ import checkRouter from "./modules/checks/check.route.js";
 import { scheduler } from "./modules/scheduler/check.scheduler.js";
 import summaryRouter from "./modules/summary/summary.route.js";
 import alertRouter from "./modules/alerts/alert.route.js";
+import systemRouter from "./modules/system/system.route.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -24,6 +25,7 @@ app.use("/api", targetRouter);
 app.use("/api", checkRouter);
 app.use("/api", summaryRouter);
 app.use("/api", alertRouter);
+app.use("/api", systemRouter);
 
 process.on("SIGINT", () => {
   scheduler.stop();
