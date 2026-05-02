@@ -1,8 +1,9 @@
 import { Types } from "mongoose";
 import Target from "../targets/target.model.js";
 import Check from "./check.model.js";
-import Summary from "../summary/summary.model.js";
+// import Summary from "../summary/summary.model.js";
 import { createAlert } from "../alerts/alert.service.js";
+import { updateSummary } from "../summary/summary.service.js";
 
 export const runHealthCheck = async (id: string) => {
   try {
@@ -47,19 +48,21 @@ export const runHealthCheck = async (id: string) => {
 
     await Target.findByIdAndUpdate(_id, { lastCheckedAt: result!.checkedAt });
 
-    await Summary.findOneAndUpdate(
-      { targetId: _id },
-      {
-        $set: { lastStatus: result!.success ? "HEALTHY" : "DOWN" },
-        $inc: { consecutiveFailureCount: result!.success ? -999 : 1 }, // Logic below
-      },
-      { upsert: true },
-    );
+    // await Summary.findOneAndUpdate(
+    //   { targetId: _id },
+    //   {
+    //     $set: { lastStatus: result!.success ? "HEALTHY" : "DOWN" },
+    //     $inc: { consecutiveFailureCount: result!.success ? -999 : 1 }, // Logic below
+    //   },
+    //   { upsert: true },
+    // );
 
-    await Summary.updateOne(
-      { targetId: _id, consecutiveFailureCount: { $lt: 0 } },
-      { $set: { consecutiveFailureCount: 0 } },
-    );
+    // await Summary.updateOne(
+    //   { targetId: _id, consecutiveFailureCount: { $lt: 0 } },
+    //   { $set: { consecutiveFailureCount: 0 } },
+    // );
+
+    await updateSummary(_id.toString(), result!);
 
     await createAlert(_id.toString());
 
