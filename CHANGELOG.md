@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## - 2026-05-2
+
+### Added
+
+- **Real-time analytics**: New summary engine tracking uptime and avgLatency.
+- **Atomic updates**: Migrated summary logic to MongoDB aggregation pipelines for data accuracy.
+- **Extended schema**: Support for totalCheckCount, successCount, and failureCount
+
+### Changed
+
+- **Optimization**: Replaced multiple database calls (findOne, updateOne) with a single atomic findOneAndUpdate pipeline.
+- **Failure Logic**: Improved consecutiveFailureCount handling—removed the "-999 hack" in favor of a clean conditional reset.
+
 ## - 2026-05-01
 
 ### Added
