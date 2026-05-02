@@ -1,6 +1,6 @@
 {
   "name": "ping",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A high-performance monitoring engine that orchestrates parallel network probes, manages service health summaries via atomic MongoDB updates, and implements a state-driven incident alerting system",
   "private": true,
   "engines": {
