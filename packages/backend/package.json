@@ -1,0 +1,26 @@
+{
+  "name": "@ping/backend",
+  "main": "./dist/server.js",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "npm run build && node dist/server.js",
+    "build:watch": "tsc -b --watch",
+    "start:dev": "nodemon dist/server.js",
+    "dev": "concurrently \"npm run build:watch\" \"npm run start:dev\""
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.14",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.5.0",
+    "zod": "^4.3.6"
+  }
+}
