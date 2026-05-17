@@ -1,8 +1,8 @@
 import React from "react";
 import { inter } from "./fonts";
-import Navbar from "./components/layout/Navbar";
+import Aside from "./components/BaseLayout/Aside";
+import Navbar from "./components/BaseLayout/Navbar";
 import "./globals.css";
-import Aside from "./components/layout/Aside";
 
 export default function RootLayout({
   children,
@@ -12,7 +12,9 @@ export default function RootLayout({
       <body>
         <Navbar />
         <Aside />
-        <main>{children}</main>
+        <main className="h-[calc(100vh-40px)] ml-20 mt-10 overflow-y-auto p-4 bg-gray-300">
+          {children}
+        </main>
       </body>
     </html>
   );
