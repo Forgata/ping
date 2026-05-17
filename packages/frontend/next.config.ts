@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   experimental: {
     externalDir: true,
   },
-  transpilePackages: ["@ping/backend"],
+  transpilePackages: ["../backend"],
   /* config options here */
 };
 

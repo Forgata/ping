@@ -11,7 +11,8 @@
     },
     "composite": true,
     "sourceMap": true,
-    "declaration": true
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["src/**/*"],
   "exclude": ["dist", "node_modules"]
