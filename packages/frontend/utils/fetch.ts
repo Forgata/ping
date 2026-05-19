@@ -1,7 +1,6 @@
 import { Document } from "mongoose";
-import next from "next/dist/types";
 
-interface FetchData<T> {
+export interface FetchData<T> {
   success: boolean;
   data: T extends never[]
     ? Omit<T[number], keyof Document>
