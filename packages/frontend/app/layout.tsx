@@ -1,14 +1,21 @@
 import React from "react";
-import { inter } from "./fonts";
+// import { inter } from "./fonts";
 import Aside from "./components/BaseLayout/Aside";
 import Navbar from "./components/BaseLayout/Navbar";
 import "./globals.css";
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.className}>
+    <html
+      lang="en"
+      className={cn(inter.className, "font-sans", inter.variable)}
+    >
       <body>
         <Navbar />
         <Aside />
