@@ -1,33 +1,60 @@
 "use client";
 
-export default function HeatMapGridUI() {
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { Bar, BarChart, XAxis, YAxis } from "recharts";
+
+interface HeatMapGridUIProps {
+  upCount: number;
+  activeAlerts: number;
+  chartData: { name: string; value: number }[];
+  chartConfig: ChartConfig;
+}
+
+export default function HeatMapGridUI({
+  upCount,
+  activeAlerts,
+  chartData,
+  chartConfig,
+}: HeatMapGridUIProps) {
   return (
-    <section className="border border-gray-700 p-4 mb-6">
-      <div className="flex justify-between items-center mb-4">
-        <h2>Target Heatmap</h2>
-        <div className="flex gap-4">
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 bg-emerald-500/20 border border-emerald-500"></span>
-            <span className="text-[10px] uppercase text-gray-500">Online</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 bg-red-500/20 border border-red-500"></span>
-            <span className="text-[10px] uppercase text-gray-500">Offline</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 bg-gray-500/20 border border-gray-500"></span>
-            <span className="text-[10px] uppercase text-gray-500">muted</span>
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-wrap gap-1">
-        {Array.from({ length: 28 }).map((_, i) => (
-          <div
-            key={i}
-            className="w-8 aspect-square bg-emerald-500/10 border border-emerald-500/30"
-          ></div>
-        ))}
-      </div>
-    </section>
+    <Card className="w-full rounded-none">
+      <CardHeader>
+        <CardTitle className="text-xl font-bold">
+          Target Heat Map Chart
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig} className="h-20 w-full">
+          <BarChart
+            accessibilityLayer
+            data={chartData}
+            layout="vertical"
+            margin={{ left: -20 }}
+            barCategoryGap={0}
+          >
+            <XAxis type="number" dataKey="value" hide />
+            <YAxis
+              type="category"
+              dataKey="name"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              tickFormatter={(value) => value.slice(0, 3)}
+            />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Bar dataKey="value" fill="green" radius={5} barSize={30}></Bar>
+          </BarChart>
+        </ChartContainer>
+      </CardContent>
+    </Card>
   );
 }
