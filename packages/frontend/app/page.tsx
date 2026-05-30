@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <Overview />
       <SummaryTiles />
-      <HeatMapGrid />
+      {/* <HeatMapGrid /> */}
       <TargetTable />
     </>
   );
