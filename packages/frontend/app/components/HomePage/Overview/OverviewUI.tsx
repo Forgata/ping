@@ -9,7 +9,7 @@ export default function OverviewUI() {
     "http://localhost:3001/api/system/status",
     fetchData,
     {
-      refreshInterval: 5000,
+      refreshInterval: 4000,
       revalidateOnFocus: true,
     },
   );
@@ -24,13 +24,13 @@ export default function OverviewUI() {
       </div>
       <div className="flex items-center gap-2 text-gray-500 px-3 bg-gray-950 py-1.5 border border-gray-700">
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <LastCycleAt data={data} error={error} isLoading={isLoading} />
+        <LastCycleAtState data={data} error={error} isLoading={isLoading} />
       </div>
     </div>
   );
 }
 
-function LastCycleAt({
+function LastCycleAtState({
   data,
   error,
   isLoading,
