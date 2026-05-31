@@ -14,9 +14,7 @@ interface TargetTableUIProps {
   targets: ITarget[];
 }
 
-export default function TargetTableUI({ targets }: TargetTableUIProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-
+function handlePagination(currentPage: number, targets: ITarget[]) {
   const itemsPerPage = 5;
   const totalTargets = targets.length;
   const totalPages = Math.ceil(totalTargets / itemsPerPage);
@@ -25,10 +23,18 @@ export default function TargetTableUI({ targets }: TargetTableUIProps) {
   const endIndex = startIndex + itemsPerPage;
   const currentTargets = targets.slice(startIndex, endIndex);
 
-  function handlePageIncrement(page: number) {
+  return { currentTargets, totalPages };
+}
+
+export default function TargetTableUI({ targets }: TargetTableUIProps) {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { currentTargets, totalPages } = handlePagination(currentPage, targets);
+
+  function handlePageIncrement() {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   }
-  function handlePageDecrement(page: number) {
+  function handlePageDecrement() {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
   }
 
@@ -105,7 +111,7 @@ export default function TargetTableUI({ targets }: TargetTableUIProps) {
         <div className="flex gap-1">
           <button
             className="w-7 h-7 flex items-center justify-center border border-[#2D333B] hover:bg-[#1C2126] text-gray-500 disabled:opacity-30"
-            onClick={() => handlePageDecrement(currentPage - 1)}
+            onClick={() => handlePageDecrement()}
             disabled={currentPage === 1}
           >
             <span className="material-symbols-outlined text-[16px]">
@@ -117,7 +123,7 @@ export default function TargetTableUI({ targets }: TargetTableUIProps) {
           </button>
           <button
             className="w-7 h-7 flex items-center justify-center border border-[#2D333B] hover:bg-[#1C2126] text-gray-500 disabled:opacity-30"
-            onClick={() => handlePageIncrement(currentPage + 1)}
+            onClick={() => handlePageIncrement()}
             disabled={currentPage === totalPages}
           >
             <span className="material-symbols-outlined text-[16px]">
